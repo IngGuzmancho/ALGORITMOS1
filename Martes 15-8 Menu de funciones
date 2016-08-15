@@ -1,0 +1,72 @@
+#include <conio.h>
+#include <iostream>
+#include "stdlib.h"
+
+using namespace std;
+float Cifras (int numero);
+float Sumatoria (int numero);
+
+void main(){
+	float R;
+	int A,B,C,numero;
+	do{
+		cout<<"MENU"<<endl;
+		cout<<"Escriba el numero de la opcion que corresponde"<<endl;
+		cout<<"1. Calculadora de numero de cifras"<<endl;
+		cout<<"2. Calculadora de la suma de los digitos de un numero"<<endl;
+		cout<<"0. Salir del menu"<<endl;
+		cin>>A;
+		switch(A)
+		{
+			case 1: 
+				{
+					cout<<"Ingrese el numero natural: "<<endl;
+					cin>>numero;
+					R= Cifras(numero);
+					cout<< "Su numero de cifras es: " <<R<<endl;
+					break;
+				}
+			case 2:
+				{
+					cout<<"Ingrese el numero natural: "<<endl;
+					cin>>numero;
+					R= Sumatoria (numero);
+					cout<<"La sumatoria de las cifras es: "<<R<<endl;
+					break;
+				}
+			case 0: cout<<"Saliendo del programa";
+					break;
+			default:cout<<"Opcion invalida, digite 1 o 2 para continuar o 0 para salir"<<endl;
+					break;
+			
+		}
+		getch();
+		system("cls");
+	}while(A!=0);
+	
+
+	getch();
+}
+
+ float Cifras (int numero)
+{
+	int acum=0;
+	while(numero>1)
+ {
+	 numero=numero/10;
+	 acum++;
+	 }
+ return(acum);
+ }
+ float Sumatoria (int numero)
+ {	
+	 int suma=0;
+	 while(numero>0)
+	 {int X=0;
+	 X=numero%10;
+	 suma=suma+X;
+	 numero=numero/10;
+	 }
+	 return(suma);
+ }
+
