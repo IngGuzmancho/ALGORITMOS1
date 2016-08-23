@@ -1,0 +1,219 @@
+#include <conio.h>
+#include <iostream>
+#include "stdlib.h"
+#include <math.h>
+
+using namespace std;
+int cifras (int numero);
+int Sumatoria (int numero);
+int invertir (int numero);
+bool verifPrimo (int numero);
+int sumaDigitosPrimos(int numero);
+float acoplar (float nro1,float nro2);
+int ascender(int numero);
+int sumaDigitosNOPrimos(int numero);
+int eliminarPrimos(int numero);
+
+
+void main(){
+	
+	int A,B,C,R,numero,nro1,nro2;
+	do{
+		cout<<"MENU"<<endl;
+		cout<<"Escriba el numero de la opcion que corresponde"<<endl;
+		cout<<"1. Calculadora de numero de cifras"<<endl;
+		cout<<"2. Calculadora de la suma de los digitos de un numero"<<endl;
+		cout<<"3. Invertir el numero"<<endl;
+		cout<<"4. Sumar solo los numeros primos del numero"<<endl;
+		cout<<"5. Unir los numeros"<<endl;
+		cout<<"6. Sumar solo los numeros que no son primos"<<endl;
+		cout<<"7. Sumar solo los numeros mayores al primer digito"<<endl;
+		cout<<"8. Eliminar digitos primos de un numero"<<endl;
+		cout<<"0. Salir del menu"<<endl;
+		
+		cin>>A;
+		switch(A)
+		{
+			case 1: 
+				{
+					cout<<"Ingrese el numero natural: "<<endl;
+					cin>>numero;
+					R= cifras(numero);
+					cout<< "Su numero de cifras es: " <<R<<endl;
+					break;
+				}
+			case 2:
+				{
+					cout<<"Ingrese el numero natural: "<<endl;
+					cin>>numero;
+					R= Sumatoria (numero);
+					cout<<"La sumatoria de las cifras es: "<<R<<endl;
+					break;
+				}
+			case 3:
+				{	
+					cout<<"Ingrese el numero natural: "<<endl;
+					cin>>numero;
+					R=invertir(numero);
+					cout<<"El numero invertido es: "<<R<<endl;
+					break;
+				}
+			case 4:
+				{
+					cout<<"Ingrese el numero natural: "<<endl;
+					cin>>numero;
+					R=sumaDigitosPrimos(numero);
+					cout<<"La sumatoria es: "<<R<<endl;
+					break;
+				}
+			case 5:
+				{
+					cout<<"Ingrese el primer numero: "<<endl;
+					cin>>nro1;
+					cout<<"Ingrese el segundo numero: "<<endl;
+					cin>>nro2;
+					R=acoplar(nro1,nro2);
+					cout<<"El numero combinado es: "<<R<<endl;
+					break;
+				}
+			case 6:
+				{
+
+					cout<<"Ingrese el numero natural: "<<endl;
+					cin>>numero;
+					R=sumaDigitosNOPrimos(numero);
+					cout<<"La sumatoria es: "<<R<<endl;
+					break;
+
+				}
+			case 7:
+				{
+					cout<<"Ingrese el numero: "<<endl;
+					cin>>numero;
+					R= ascender(numero);
+					cout<<"La sumatoria de la serie es: "<<R<<endl;
+					break;
+				}
+			case 8:
+				{
+					cout<<"Ingrese su numero: "<<endl;
+					cin>>numero;
+					R= eliminarPrimos(numero);
+					cout<<"El resultado es: "<<R<<endl;
+					break;
+				}
+
+			case 0: cout<<"Saliendo del programa"<<endl;
+					break;
+			default:cout<<"Opcion invalida, digite una de las opciones para continuar"<<endl;
+					break;
+			
+		}
+		getch();
+		system("cls");
+	}while(A!=0);
+	
+
+	getch();
+}
+
+ int cifras (int numero)
+{
+	int acum=0;
+	while(numero>0)
+ {
+	 numero=numero/10;
+	 acum++;
+	 }
+ return(acum);
+ }
+ int Sumatoria (int numero)
+ {	
+	 int suma=0;
+	 while(numero>0)
+	 {int X=0;
+	 X=numero%10;
+	 suma=suma+X;
+	 numero=numero/10;
+	 }
+	 return(suma);
+ }
+ int invertir (int numero)
+ {	
+	 int A,B=0;
+	 while (numero>0){
+		 A=numero%10;
+		 B=B*10+A;
+		 numero=numero/10;
+	 }
+	 return(B);
+ }
+bool verifPrimo (int numero)
+{
+	bool P=true;
+	for(int i=2;i<numero;i++){
+		if(numero%i==0)
+			P=0;
+	}
+	return (P);
+}
+int sumaDigitosPrimos(int numero)
+{
+	int d, s=0;
+	while(numero>0){
+		d=numero%10;
+		if(verifPrimo(d)==true)
+			s=s+d;
+	numero=numero/10;
+	}
+return(s);
+}
+float acoplar (float nro1,float nro2)
+{
+	float A,B,C;
+	A= cifras (nro2);
+	B=powf(10,A);
+	nro1=nro1*B;
+	C=nro1+nro2;
+	return(C);
+}
+
+int ascender(int numero)
+{
+	int a,b,c,s=0;
+	a=invertir(numero);
+	b=a%10;
+	a=a/10;
+	while(a>0){
+		c=a%10;
+		if(c>b)
+			s=s+c;
+		a=a/10;
+	}
+return(s);
+}
+int sumaDigitosNOPrimos(int numero)
+{
+	int d, s=0;
+	while(numero>0){
+		d=numero%10;
+		if(verifPrimo(d)==false)
+			s=s+d;
+	numero=numero/10;
+	}
+return(s);
+}
+int eliminarPrimos(int numero)
+{
+	int a,b,c,s=0;
+	a=invertir(numero);
+	while(a>0){
+		b=a%10;
+		c=verifPrimo(b);
+		if(c==false){
+			s=s*10+b;}
+		
+		a=a/10;
+	}
+	return(s);
+}
