@@ -1,0 +1,96 @@
+#include <conio.h>
+#include <iostream>
+
+using namespace std;
+
+void cargar(int vec[], int n);
+void mostrar(int vec[], int n);
+bool verifPrimo (int n);
+void elimPrimo(int vec[], int &n);
+int obtenEnesimoPrimo(int n);
+void cargarVec(int vec[],	int n);
+void ordenar( int vec[], int n);
+void main(){
+
+	int vec[50], nro;
+	cout<<"Ingrese la cantidad de datos a almacenarse en el vector: "<<endl;
+	cin>>nro;
+	cargar(vec,nro);
+	mostrar(vec,nro);
+	ordenar(vec,nro);
+	mostrar(vec,nro);
+
+
+	getch();
+}
+
+void cargar(int vec[], int n){
+	for(int i=0;i<n;i++){
+		cout<<"Ingrese el vec["<<i<<"]: ";
+		cin>>vec[i];
+	}
+}
+void mostrar(int vec[], int n){
+	for(int i=0; i<n; i++)
+		cout<<"El vector vec["<<i<<"] es: "<<vec[i]<<endl;
+}
+bool verifPrimo (int n){
+	bool k=true;
+	for (int i=2;i<n;i++){
+		if(n%i==0)
+			k=false;
+	}
+	return(k);
+}
+void elimPrimo(int vec[], int &n){
+	bool k;
+	for (int i=0;i<n;i++){
+		if (verifPrimo(vec[i])==true){
+			for(k=i;k<n-1;k++){
+				vec[k]=vec[k+1];
+			}
+			n--;
+			i--;
+		}
+	}
+}
+int obtenEnesimoPrimo(int n){
+	int c=0,cp=0;
+
+	while(cp<n){
+		c++;
+		if(verifPrimo(c)==true){
+			cp++;
+		}
+	}
+
+	return(c);
+}
+
+
+void cargarVec(int vec[],	int n){
+	int k=0,iS=0,iB=n-1;
+	for(int i=1;i<n;i++){
+	if (k==0){
+		vec[iS++]=obtenEnesimoPrimo(i);
+		k=1;
+	}else{
+		vec[iB--]=obtenEnesimoPrimo(i);
+		k=0;
+	}
+	}
+}
+void ordenar( int vec[], int n){
+	int aux;
+	for (int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+		
+			if(vec[i]>vec[j]){
+			aux=vec[i];
+			vec[i]=vec[j];
+			vec[j]=aux;
+			}
+		}
+	}
+}
+
