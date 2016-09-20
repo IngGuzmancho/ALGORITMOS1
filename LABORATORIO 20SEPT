@@ -1,0 +1,123 @@
+#include <iostream>
+#include <conio.h>
+
+struct vecDeVec{
+	int svec[50];
+};
+
+using namespace std;
+
+void cargar(vecDeVec vec[],int n);
+void mostrar(vecDeVec vec[], int n);
+void cargarMatriz(vecDeVec vec[], int n);
+void ordenarMenorMayor(vecDeVec vec[], int n);
+bool verifEsPrimo( int n);
+void moverPrimos(vecDeVec vec[], int n);
+void ordenar(int vec[], int n);
+
+void main(){
+	vecDeVec v[50];
+	int nro;
+
+	cout<<"Ingrese la cantidad de elementos del vector: ";
+	cin>>nro;
+
+	cargar(v,nro);
+	moverPrimos(v,nro);
+	cout<<endl;
+	mostrar(v,nro);
+	
+
+	getch();
+}
+
+void cargar(vecDeVec vec[], int n){
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			cout<<"Ingrese el subelemento del vector ["<<i<<"]: ";
+			cin>>vec[i].svec[j];
+		}
+		cout<<"Siguiente vector"<<endl;
+	}
+}
+void mostrar(vecDeVec vec[], int n){
+	for( int i=0;i<n;i++){
+		for( int j=0;j<n;j++){
+			cout<<"vec["<<i<<"].["<<j<<"]: "<<vec[i].svec[j]<<"   ";
+		}
+		cout<<endl;
+	}
+}
+void cargarMatriz( vecDeVec vec[], int n){//DIAGONAL SUPERIOR E INFERIOR SON IMPARES,RECTA PPAL SON NUMEROS SEGUIDOS COMENZANDO POR EL 1
+	int a=1,b=1;
+	for( int i=0;i<n;i++){
+		for( int j=0;j<n;j++){
+			if(i==j){
+				vec[i].svec[j]=i+1;
+			}else{
+				if(j>i){
+					vec[i].svec[j]=a;
+					a=a+2;
+				}else{
+					vec[i].svec[j]=b;
+					b=b+2;
+				}
+			}
+		}
+	}
+}
+void ordenarMenorMayor(vecDeVec vec[], int n){ //ORDENA DE MENOR A MAYOR LOS SUBVECTORES
+	int aux;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			for(int k=0;k<n;k++){
+				if(vec[i].svec[j]<vec[i].svec[k]){
+					aux=vec[i].svec[k];
+					vec[i].svec[k]=vec[i].svec[j];
+					vec[i].svec[j]=aux;
+				}
+			}
+		}
+	}
+}
+bool verifEsPrimo( int n){
+	bool k=true;
+	for(int i=2;i<n;i++){
+		if(n%i==0)
+			k=false;
+	}
+	return(k);
+}
+void moverPrimos(vecDeVec vec[], int n){
+	int vA[50],nA=0;
+	for( int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			if(verifEsPrimo(vec[i].svec[j])==true){
+				vA[nA]=vec[i].svec[j];
+				nA++;
+			}
+		}
+	}
+	ordenar(vA,nA);
+	nA=0;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			if(verifEsPrimo(vec[i].svec[j])==true){
+				vec[i].svec[j]=vA[nA];
+				nA++;
+			}
+		}
+	}
+}
+void ordenar(int vec[], int n){//ORDENAR SOLO LOS NUMEROS PRIMOS DEL VEC DE VECS.
+	int aux;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			if(vec[i]<vec[j]){
+				aux=vec[i];
+				vec[i]=vec[j];
+				vec[j]=aux;
+			}
+		}
+	}
+}
