@@ -1,0 +1,69 @@
+#include <iostream>
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+
+struct regAmigos{
+	char nombre[30];
+	int edad;
+	char sexo;
+	char estado; //A de activo o E de eliminado
+};
+
+using namespace std;
+void cargarAmigo();
+//void mostrarAmigos();
+
+void main(){
+	
+	//cargarAmigo();
+	mostrarAmigos();
+	
+	getch();
+}
+
+void cargarAmigo(){
+	FILE *ptr;	//Puntero del archivo
+	regAmigos reg;
+
+	do{
+		cout<<"Introduzca el nombre: ";
+		gets(reg.nombre);
+		if(strlen(reg.nombre)==0)
+			cout<<"Introduzca un nombre valido"<<endl;
+	}while(strlen(reg.nombre)==0);
+	do{
+		cout<<"Introduzca edad: ";
+		cin>>reg.edad;
+		if(reg.edad<1 || reg.edad>120)
+			cout<<"Introduzca una edad de 1 a 120"<<endl;
+	}while(reg.edad<1 || reg.edad>120);
+	do{
+		cout<<"Introduzca sexo(M o F): ";
+		cin>>reg.sexo;
+		if(reg.sexo != 77 && reg.sexo != 70)
+			cout<<"Introduzca el sexo en mayusculas"<<endl;
+	}while(reg.sexo != 77 && reg.sexo != 70);
+	reg.estado= 'A';
+	//ptr = fopen("amigos.dat","wb"); //abre archivo y si no existe, lo crea.
+	ptr = fopen("amigos.dat","ab");//Abre archivo para adicionar datos
+	fwrite(&reg,sizeof(reg),1,ptr);//Escribe un registro en el archivo
+	fclose(ptr); //Ciera archivo
+	
+}
+
+void mostrarAmigos(){ //Muestra el contenido del archivo amigos
+	FILE *ptr; //Puntero del archivo
+	regAmigo reg;
+	ptr=fopen("amigos.dat","rb");//Abre archivos en modo lectura
+	if(ptr != NULL){
+		fread(&reg, sizeof(reg),1,ptr);//Lee un registro del archivo
+		while(feof(ptr) == false){
+			cout<<"\n" <<reg.nombre<<"	"<<reg.edad<<"	"<<reg.sexo;
+			fread(&reg, sizeof(reg),1,ptr);
+		}
+		fclose(ptr);
+	}else{
+		cout<< "\nArchivo no existe";
+	}
+}
